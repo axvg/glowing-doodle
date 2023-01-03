@@ -1,22 +1,16 @@
-name: GODOT
+name: "godot-ci export"
+on: push
 
 env:
-  GODOT_VERSION: 3.5.1
-  
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-  workflow_dispatch:
+  GODOT_VERSION: 3.3.4
+  PROJECT_PATH: glowing-doodle
 
 jobs:
   export-web:
     name: Web Export
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:3.5.1
+      image: barichello/godot-ci:3.3.4
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -29,6 +23,7 @@ jobs:
       - name: Web Build
         run: |
           mkdir -v -p build/web
+          ls
           godot -v --export "HTML5" ./build/web/index.html
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
